@@ -1,116 +1,107 @@
-const restartBtn = document.getElementById('restartButton')
-const playBtn = document.getElementById('playButton')
-const paperInput = document.getElementById('playerPaper')
-const rockInput = document.getElementById('playerRock')
-const scissorsInput = document.getElementById('playerScissors')
+const userChoiceDisplay = document.createElement('h1')
+const computerChoiceDisplay = document.createElement('h1')
+const resultDisplay = document.createElement('h1')
+const gameGrid = document.getElementById('game')
+const playButton = document.createElement('button')
+const restartButton = document.createElement('button')
+const timerDisplay = document.getElementById('timer');
 
-const paperInputEnemy = document.getElementById('enemyPaper')
-const rockInputEnemy = document.getElementById('enemyRock')
-const scissorsInputEnemy = document.getElementById('enemyScissors')
+gameGrid.append(userChoiceDisplay,computerChoiceDisplay,resultDisplay,playButton, restartButton)
 
+const choices = ['rock', 'paper', 'scissors']
+let userChoice
+let computerChoice
+let timerInterval
+let timeLeft = 10
 
-const loseImg = document.getElementById("loseImg")
-const winImg = document.getElementById("winImg")
-const tieImg = document.getElementById("tieImg")
-const img = document.getElementsByClassName("image")
-
-let playerChoice
-let enemyChoice 
-let options = ["Rock","Paper","Scissors"]
-let winner
-
-
-
-
-function start(){
-    const playBtn = document.getElementById('playButton')
-    const paperInput = document.getElementById('playerPaper')
-    const rockInput = document.getElementById('playerRock')
-    const scissorsInput = document.getElementById('playerScissors')
-
-
-
-    paperInput.addEventListener('click', inputChecked)
-    rockInput.addEventListener('click', inputChecked)
-    scissorsInput.addEventListener('click', inputChecked)
-    playBtn.addEventListener('click', play)
-
-
+const handleClick = (e) => {
+    userChoice = e.target.id
+    userChoiceDisplay.innerHTML = 'User choice ' + userChoice
+    generateComputerChoice()
+    getResult()
+    clearInterval(timerInterval);
 }
 
-function play(){
-    let max = 3
-    let min = 1
-    enemyChoice = options[Math.floor(Math.random() * (max - min + 1) + min)-1]
-    tieImg.style.display = 'none'
-    loseImg.style.display = 'none'
-    winImg.style.display = 'none'
-    if(playerChoice === enemyChoice){
-        winner = "it´s a draw"
-        tieImg.style.display = 'block'
-        checkEnemyInput()
-    }else if(playerChoice === "Rock" && enemyChoice === "Scissors"){
-        winner =  "Win!"
-        winImg.style.display = 'block'
-        checkEnemyInput()
+const generateComputerChoice = () => {
+    //math.floor lo utilizo para que el valor valla de 0 a 2
+    const randomChoice = choices[Math.floor(Math.random() * choices.length)]
+    computerChoice = randomChoice
+    computerChoiceDisplay.innerHTML = 'Pc choice ' + computerChoice
+                        
+}
 
-    }else if(playerChoice === "Rock" && enemyChoice === "Paper"){
-        winner =  "You lose!"
-        loseImg.style.display = 'block'
-        checkEnemyInput()
-
-    }else if(playerChoice === "Paper" && enemyChoice === "Scissors"){
-        winner =  "You lose!"
-        loseImg.style.display = 'block'
-        checkEnemyInput()
-
-    }else if(playerChoice === "Paper" && enemyChoice === "Rock"){
-        winner =  "Win!"
-        winImg.style.display = 'block'
-        checkEnemyInput()
-
-    }else if(playerChoice === "Scissors" && enemyChoice === "Rock"){
-        winner =  "You lose!"
-        loseImg.style.display = 'block'
-        checkEnemyInput()
-
-    }else if(playerChoice === "Scissors" && enemyChoice === "Paper"){
-        winner =  "Win!"
-        winImg.style.display = 'block'
-        checkEnemyInput()
-    }else{
-        winner = "no has seleccionado nada"
+for(let i = 0; i < choices.length; i++)
+    {
+        const button = document.createElement('button')
+        button.id = choices[i]  // 
+        button.className = 'choiceButton'
+        button.innerHTML = choices[i]
+        button.addEventListener('click', handleClick)
+        button.disabled = true
+        gameGrid.appendChild(button)
     }
 
-    alert(winner)
-}
+    playButton.innerHTML = "Play"
+    restartButton.innerHTML = "Restart"
 
-function checkEnemyInput(){
-    switch (enemyChoice) {
-        case "Rock":
-            rockInputEnemy.checked = true
-            break;
-        case "Paper":
-            paperInputEnemy.checked = true
-            break;
-        case "Scissors":
-            scissorsInputEnemy.checked = true
-            break;
+const getResult = () => {
+    switch(userChoice + computerChoice){
+        case 'scissorspaper':
+        case 'rockscissors':
+        case 'paperrock':
+            resultDisplay.innerHTML = "You Win!"
+            break
+
+        case 'paperscissors':
+        case 'scissorsrock':
+        case 'rockpaper':
+            resultDisplay.innerHTML = "You Lose!"
+            break
+            
+        case 'paperpaper':
+        case 'scissorsscissors':
+        case 'rockrock':
+            resultDisplay.innerHTML = "It´s a Draw"
+            break
+
+        default: 
+            resultDisplay.innerHTML = "You Lose"
+            break
     }
 }
 
+playButton.addEventListener('click', () =>{
+    let  buttonsChoice = document.getElementsByClassName('choiceButton')
+    for (let i = 0; i < buttonsChoice.length; i++) {
+        buttonsChoice[i].disabled = false
+    }
 
-function inputChecked(){
+    timerInterval = setInterval(updateTimer, 1000);
+})
+
+restartButton.addEventListener('click', () =>{
+    const  buttonsChoice = document.getElementsByClassName('choiceButton')
+    computerChoiceDisplay.innerHTML = ""
+    resultDisplay.innerHTML = ""  
+    userChoiceDisplay.innerHTML = ""  
+
+    Array.from(buttonsChoice).forEach(e => {
+        e.disabled = true
+    })
 
     
-    if(rockInput.checked){
-        playerChoice = rockInput.value
-    }else if(paperInput.checked){
-        playerChoice = paperInput.value
-    }else if(scissorsInput.checked){
-        playerChoice = scissorsInput.value
-    }
+    timeLeft = 10;
+    timerDisplay.innerText = "time:"+ timeLeft;
+    clearInterval(timerInterval);
+})
+
+const updateTimer = () => {
+    timeLeft--
+    timerDisplay.innerHTML = "time:"+ timeLeft
+
+    if (timeLeft === 0) {
+        clearInterval(timerInterval);
+        generateComputerChoice()
+        getResult()
+      }
 }
-
-
-window.addEventListener('load', start)

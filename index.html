@@ -8,35 +8,9 @@
     <title>Piedra, Papel, Tijeras</title>
 </head>
 <body>
-    <section id="game-section">
-        <div class="playerArea" id="playerSide">
-
-            
-            <input type="radio" name="playerInput" id="playerPaper" value="Paper">
-            <label for="playerPaper">Paper</label>
-            <input type="radio" name="playerInput" id="playerRock" value="Rock">
-            <label for="playerRock">Rock</label>
-            <input type="radio" name="playerInput" id="playerScissors" value="Scissors">
-            <label for="playerScissors">Scissors</label>
-            
-        </div>
-        <div id="gameBoard">
-            <img src="./Assets/Lose.PNG" id="loseImg">
-            <img src="./Assets/Win.PNG" id="winImg">
-            <img src="./Assets/Tie.PNG" id="tieImg">
-        </div>
-        <div class="playerArea" id="enemySide">
-            <input type="radio" name="enemyInput" id="enemyPaper" value="Paper" >
-            <label for="enemyPaper">Paper</label>
-            <input type="radio" name="enemyInput" id="enemyRock"  value="Rock">
-            <label for="enemyRock">Rock</label>
-            <input type="radio" name="enemyInput" id="enemyScissors" value="Scissors">
-            <label for="enemyScissors">Scissors</label>
-
-        </div>
-    </section>
-    <button id="playButton"> Play</button>
-    <button id="restartButton"> Restart</button>
+    
+    <div id="game"></div>
+    <h2 id="timer"></h2>
     <script src="./js/RockPaperScissors.js"></script>
 </body>
 </html>

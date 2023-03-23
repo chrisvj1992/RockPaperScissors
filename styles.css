@@ -2,62 +2,21 @@ body{
     background-color: #112C37;
 }
 
-#game-section{
-    width: 640px;
-    height: 320px;
-    margin: 0 240px;
-
-    display: grid;
-    grid-template-columns: 25% 50% 25%;
-    background-color: #16A085;
-    border-radius: 5px;
-}
-
-#gameBoard{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    background-color:#1631A0;
-    margin: 16px;
-    border-radius: 5px;
-}
-
-.playerArea{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 16px;
-    border-radius: 5px;
-}
 
 button{
     width: 64px;
     height: 40px;
     border-radius: 50px;
-    margin: 10px;
+    margin: 15px;
     text-align: center;
     background-color: #52CBFF;
     border-color: #1A8BBC;
 }
 
+h1,h2{
+    color: #FFF;
+}
+
 button:hover{
     background-color: #43A1CA;
-}
-
-input:checked + label {
-    color: #1631A0;
-}
-  
-input + label {
-    font-size: x-large;
-}
-
-
-#gameBoard img{
-    width: 240px;
-    height: 180px;
-    display: none;
 }
